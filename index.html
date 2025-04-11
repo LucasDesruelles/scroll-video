@@ -2,24 +2,21 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scroll Vidéo</title>
   <style>
-    body {
+    html, body {
+      height: 3000px; /* Hauteur de la page, modifiable en fonction du scroll */
       margin: 0;
-      height: 3000px; /* Ajuste selon le nombre d'images dans la vidéo */
-      background-color: black;
+      background: black;
     }
 
     video {
       position: fixed;
       top: 0;
       left: 50%;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
+      width: 100%; /* La vidéo prend toute la largeur */
       transform: translateX(-50%);
-      z-index: -1;
     }
 
     h1 {
@@ -29,28 +26,29 @@
       font-family: Arial, sans-serif;
       font-size: 16px;
       color: #fff;
-      margin-top: 50px;
     }
   </style>
 </head>
 <body>
+
   <h1>SCROLL DOWN</h1>
 
-  <video id="videoplayerhtml" class="f-video-player" preload="auto" muted>
+  <video id="videoplayerhtml" class="f-video-player" preload="auto" poster="" muted>
     <source src="https://www.dropbox.com/scl/fi/9pmmkgwl4uzzodmssip8d/Comp-1.mp4?rlkey=r3ultktjvyf6u2ht8702ki30q&st=f0f6d0tq&raw=1" type="video/mp4">
+    <source src="" type="video/webm">
+    <source src="" type="video/ogg">
   </video>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     var $video = document.getElementById('videoplayerhtml');
 
-    // Gestion du scroll
-    window.addEventListener('scroll', function() {
-      var scroll = window.scrollY;  // Position du scroll
-      var speed = 5;  // Ajuste la vitesse du scroll
-
-      // Calcul du temps de lecture basé sur la position du scroll
-      $video.currentTime = (scroll / speed); 
+    $(window).scroll(function() {
+      var speed = 300;  // Ajuste la vitesse du scroll
+      var scroll = $(this).scrollTop() / speed;  // Calcule la position de la vidéo en fonction du scroll
+      $video.currentTime = scroll;
     });
   </script>
+
 </body>
 </html>
