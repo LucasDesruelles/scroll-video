@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scroll Vidéo</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 3000px; /* Hauteur de la page pour permettre le scroll */
+      background: black;
+    }
+
+    video {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      transform: translateX(-50%);
+      z-index: -1;
+    }
+
+    h1 {
+      z-index: 1;
+      position: relative;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      color: white;
+      margin-top: 50px; /* Optionnel, juste pour espacer le texte */
+    }
+  </style>
+</head>
+<body>
+
+  <h1>SCROLL DOWN</h1>
+  
+  <video id="videoplayerhtml" class="f-video-player" preload="auto" muted>
+    <source src="https://www.dropbox.com/scl/fi/9pmmkgwl4uzzodmssip8d/Comp-1.mp4?rlkey=r3ultktjvyf6u2ht8702ki30q&st=f0f6d0tq&raw=1" type="video/mp4">
+    <source src="" type="video/webm">
+    <source src="" type="video/ogg">
+  </video>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    var $video = document.getElementById('videoplayerhtml');
+
+    $(window).scroll(function() {
+      var speed = 300; // Contrôle la vitesse de lecture de la vidéo
+      var scroll = $(this).scrollTop() / speed;
+      $video.currentTime = scroll;
+    });
+  </script>
+</body>
+</html>
