@@ -18,12 +18,6 @@
       font-family: 'Barlow Condensed', Arial, sans-serif;
     }
 
-    header {
-      width: 100%;
-      position: relative;
-      z-index: 10;
-    }
-
     .top-bar {
       background-color: #1c1c1c;
       color: white;
@@ -56,7 +50,7 @@
       height: 80px;
       position: sticky;
       top: 0;
-      z-index: 11;
+      z-index: 20;
     }
 
     .main-nav .left {
@@ -108,15 +102,6 @@
       z-index: 0;
     }
 
-    h1 {
-      z-index: 1;
-      position: relative;
-      text-align: center;
-      font-size: 16px;
-      color: #fff;
-      margin-top: 150px;
-    }
-
     @media (max-width: 768px) {
       .main-nav {
         flex-direction: column;
@@ -139,32 +124,29 @@
 </head>
 <body>
 
-  <header>
-    <div class="top-bar" id="topBar">
-      <div class="partners-logos">
-        <img src="TezosLogo_Horizontal_White1644483074005.png" alt="Partner 1">
-        <img src="Snapdragon_edit_1_PNG1719315742387.png" alt="Partner 2">
-        <img src="Performance_Logo_BWr1687519239035.png" alt="Partner 3">
-      </div>
+  <div class="top-bar" id="topBar">
+    <div class="partners-logos">
+      <img src="TezosLogo_Horizontal_White1644483074005.png" alt="Partner 1">
+      <img src="Snapdragon_edit_1_PNG1719315742387.png" alt="Partner 2">
+      <img src="Performance_Logo_BWr1687519239035.png" alt="Partner 3">
     </div>
-    <div class="main-nav">
-      <div class="left">
-        <img src="Insigne-Manchester-United.png" alt="Manchester United" class="logo">
-        <ul class="nav-links">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Fixtures</a></li>
-          <li><a href="#">Teams</a></li>
-          <li><a href="#">Shop</a></li>
-          <li><a href="#">Tickets</a></li>
-        </ul>
-      </div>
-      <div class="nav-links">
-        <a href="#" class="selected">New Trafford</a>
-      </div>
-    </div>
-  </header>
+  </div>
 
-  <h1>SCROLL DOWN</h1>
+  <div class="main-nav">
+    <div class="left">
+      <img src="Insigne-Manchester-United.png" alt="Manchester United" class="logo">
+      <ul class="nav-links">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Fixtures</a></li>
+        <li><a href="#">Teams</a></li>
+        <li><a href="#">Shop</a></li>
+        <li><a href="#">Tickets</a></li>
+      </ul>
+    </div>
+    <div class="nav-links">
+      <a href="#" class="selected">New Trafford</a>
+    </div>
+  </div>
 
   <video id="videoplayerhtml" class="f-video-player" preload="auto" muted>
     <source src="https://www.dropbox.com/scl/fi/3r5f4lca2o87v1810nx78/TEST-MU18.mp4?rlkey=yscerqvj46l1grdxgxqb7bviu&st=kk834gfl&raw=1" type="video/mp4">
@@ -177,12 +159,10 @@
     let lastScrollTop = 0;
 
     $(window).on('scroll', function() {
-      // Scroll vidéo
       const speed = 300;
       const scroll = $(this).scrollTop() / speed;
       $video.currentTime = scroll;
 
-      // Masquer uniquement la top-bar
       const currentScroll = $(this).scrollTop();
       if (currentScroll > lastScrollTop && currentScroll > 100) {
         $topBar.classList.add('hidden');
