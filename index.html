@@ -3,41 +3,141 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scroll Vidéo</title>
+  <title>Scroll Vidéo - New Trafford</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     html, body {
-      height: 10000px; /* Hauteur de la page, modifiable en fonction du scroll */
+      height: 10000px;
       margin: 0;
       background: black;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      width: 100%;
+      position: relative;
+      z-index: 10;
+    }
+
+    .top-bar {
+      background-color: #1c1c1c;
+      color: white;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0.5rem 2rem;
+    }
+
+    .partners-logos img {
+      height: 24px;
+      margin-left: 1rem;
+      filter: brightness(0) invert(1);
+    }
+
+    .main-nav {
+      background-color: #da291c;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 2rem;
+    }
+
+    .main-nav .left {
+      display: flex;
+      align-items: center;
+    }
+
+    .main-nav img.logo {
+      height: 48px;
+      margin-right: 1.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.7;
     }
 
     video {
       position: fixed;
       top: 0;
       left: 50%;
-      width: 100%; /* La vidéo prend toute la largeur */
+      width: 100%;
       transform: translateX(-50%);
+      z-index: 0;
     }
 
     h1 {
       z-index: 1;
       position: relative;
       text-align: center;
-      font-family: Arial, sans-serif;
       font-size: 16px;
       color: #fff;
+      margin-top: 150px;
+    }
+
+    @media (max-width: 768px) {
+      .main-nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
+  <header>
+    <div class="top-bar">
+      <div class="partners-logos">
+        <img src="TezosLogo_Horizontal_White1644483074005.png" alt="Partner 1">
+        <img src="Snapdragon_edit_1_PNG1719315742387.png" alt="Partner 2">
+        <img src="Performance_Logo_BWr1687519239035.png" alt="Partner 3">
+      </div>
+    </div>
+    <div class="main-nav">
+      <div class="left">
+        <img src="images(2).png" alt="Manchester United" class="logo">
+        <ul class="nav-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Fixtures</a></li>
+          <li><a href="#">Teams</a></li>
+          <li><a href="#">Shop</a></li>
+          <li><a href="#">Tickets</a></li>
+        </ul>
+      </div>
+      <div class="nav-links">
+        <a href="#">New Trafford</a>
+      </div>
+    </div>
+  </header>
+
   <h1>SCROLL DOWN</h1>
 
   <video id="videoplayerhtml" class="f-video-player" preload="auto" poster="" muted>
-    <source src="https://www.dropbox.com/scl/fi/3r5f4lca2o87v1810nx78/TEST-MU18.mp4?rlkey=yscerqvj46l1grdxgxqb7bviu&st=kk834gfl&raw=1
-" type="video/mp4">
-    <source src="" type="video/webm">
-    <source src="" type="video/ogg">
+    <source src="https://www.dropbox.com/scl/fi/3r5f4lca2o87v1810nx78/TEST-MU18.mp4?rlkey=yscerqvj46l1grdxgxqb7bviu&st=kk834gfl&raw=1" type="video/mp4">
   </video>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -45,8 +145,8 @@
     var $video = document.getElementById('videoplayerhtml');
 
     $(window).scroll(function() {
-      var speed = 300;  // Ajuste la vitesse du scroll
-      var scroll = $(this).scrollTop() / speed;  // Calcule la position de la vidéo en fonction du scroll
+      var speed = 300;
+      var scroll = $(this).scrollTop() / speed;
       $video.currentTime = scroll;
     });
   </script>
