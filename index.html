@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Scroll Vidéo - New Trafford</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -13,15 +14,14 @@
 
     html, body {
       height: 10000px;
-      margin: 0;
       background: black;
-      font-family: Arial, sans-serif;
+      font-family: 'Barlow Condensed', Arial, sans-serif;
     }
 
     header {
       width: 100%;
-      position: relative;
       z-index: 10;
+      position: relative;
     }
 
     .top-bar {
@@ -31,6 +31,13 @@
       justify-content: flex-end;
       align-items: center;
       padding: 0.5rem 2rem;
+      transition: transform 0.3s ease;
+      position: sticky;
+      top: 0;
+    }
+
+    .top-bar.hidden {
+      transform: translateY(-100%);
     }
 
     .partners-logos img {
@@ -45,6 +52,9 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.5rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 11;
     }
 
     .main-nav .left {
@@ -66,13 +76,25 @@
     .nav-links a {
       color: white;
       text-decoration: none;
-      font-weight: bold;
-      font-size: 1rem;
-      transition: opacity 0.2s ease;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      position: relative;
     }
 
-    .nav-links a:hover {
-      opacity: 0.7;
+    .nav-links a:hover,
+    .nav-links a.selected {
+      opacity: 1;
+    }
+
+    .nav-links a.selected::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background-color: white;
     }
 
     video {
@@ -110,7 +132,7 @@
 <body>
 
   <header>
-    <div class="top-bar">
+    <div class="top-bar" id="topBar">
       <div class="partners-logos">
         <img src="TezosLogo_Horizontal_White1644483074005.png" alt="Partner 1">
         <img src="Snapdragon_edit_1_PNG1719315742387.png" alt="Partner 2">
@@ -119,7 +141,7 @@
     </div>
     <div class="main-nav">
       <div class="left">
-        <img src="images (2).png" alt="Manchester United" class="logo">
+        <img src="Insigne-Manchester-United.png" alt="Manchester United" class="logo">
         <ul class="nav-links">
           <li><a href="#">Home</a></li>
           <li><a href="#">Fixtures</a></li>
@@ -129,25 +151,37 @@
         </ul>
       </div>
       <div class="nav-links">
-        <a href="#">New Trafford</a>
+        <a href="#" class="selected">New Trafford</a>
       </div>
     </div>
   </header>
 
   <h1>SCROLL DOWN</h1>
 
-  <video id="videoplayerhtml" class="f-video-player" preload="auto" poster="" muted>
+  <video id="videoplayerhtml" class="f-video-player" preload="auto" muted>
     <source src="https://www.dropbox.com/scl/fi/3r5f4lca2o87v1810nx78/TEST-MU18.mp4?rlkey=yscerqvj46l1grdxgxqb7bviu&st=kk834gfl&raw=1" type="video/mp4">
   </video>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    var $video = document.getElementById('videoplayerhtml');
+    const $video = document.getElementById('videoplayerhtml');
+    const $topBar = document.getElementById('topBar');
+    let lastScrollTop = 0;
 
-    $(window).scroll(function() {
-      var speed = 300;
-      var scroll = $(this).scrollTop() / speed;
+    $(window).on('scroll', function() {
+      // Scroll vidéo
+      const speed = 300;
+      const scroll = $(this).scrollTop() / speed;
       $video.currentTime = scroll;
+
+      // Masquer le top-bar au scroll vers le bas
+      const currentScroll = $(this).scrollTop();
+      if (currentScroll > lastScrollTop && currentScroll > 100) {
+        $topBar.classList.add('hidden');
+      } else {
+        $topBar.classList.remove('hidden');
+      }
+      lastScrollTop = currentScroll;
     });
   </script>
 
