@@ -20,8 +20,8 @@
 
     header {
       width: 100%;
-      z-index: 10;
       position: relative;
+      z-index: 10;
     }
 
     .top-bar {
@@ -34,6 +34,7 @@
       transition: transform 0.3s ease;
       position: sticky;
       top: 0;
+      z-index: 10;
     }
 
     .top-bar.hidden {
@@ -51,7 +52,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.5rem 2rem;
+      padding: 0 2rem;
+      height: 80px;
       position: sticky;
       top: 0;
       z-index: 11;
@@ -63,7 +65,7 @@
     }
 
     .main-nav img.logo {
-      height: 48px;
+      height: 80px;
       margin-right: 1.5rem;
     }
 
@@ -119,12 +121,18 @@
       .main-nav {
         flex-direction: column;
         align-items: flex-start;
+        height: auto;
+        padding: 1rem;
       }
 
       .nav-links {
         flex-direction: column;
         gap: 0.75rem;
         margin-top: 1rem;
+      }
+
+      .main-nav img.logo {
+        height: 60px;
       }
     }
   </style>
@@ -174,7 +182,7 @@
       const scroll = $(this).scrollTop() / speed;
       $video.currentTime = scroll;
 
-      // Masquer le top-bar au scroll vers le bas
+      // Masquer uniquement la top-bar
       const currentScroll = $(this).scrollTop();
       if (currentScroll > lastScrollTop && currentScroll > 100) {
         $topBar.classList.add('hidden');
