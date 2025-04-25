@@ -104,27 +104,39 @@
 
     .timeline {
       position: fixed;
-      top: 100px;
-      left: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      z-index: 30;
+      top: 50%;
+      left: 30px;
+      transform: translateY(-50%);
+      z-index: 50;
     }
 
-    .timeline-item {
+    .timeline ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .timeline li {
       color: white;
-      font-size: 1rem;
-      text-transform: uppercase;
+      margin: 40px 0;
       font-weight: bold;
-      opacity: 0.4;
-      transition: opacity 0.3s ease;
-      cursor: pointer;
+      font-size: 1rem;
+      position: relative;
     }
 
-    .timeline-item.active {
-      opacity: 1;
-      color: #da291c;
+    .timeline li::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 5px;
+      width: 10px;
+      height: 10px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .timeline li.active::before {
+      background: #da291c;
     }
 
     @media (max-width: 768px) {
@@ -143,6 +155,10 @@
 
       .main-nav img.logo {
         height: 60px;
+      }
+
+      .timeline {
+        left: 10px;
       }
     }
   </style>
@@ -174,22 +190,18 @@
   </div>
 
   <div class="timeline">
-    <div class="timeline-item" data-section="intro">Intro</div>
-    <div class="timeline-item" data-section="history">History</div>
-    <div class="timeline-item" data-section="shop">Shop</div>
-    <div class="timeline-item" data-section="stadium">The Stadium</div>
-    <div class="timeline-item" data-section="form">Fill The Form</div>
+    <ul>
+      <li id="step1">Intro</li>
+      <li id="step2">History</li>
+      <li id="step3">Shop</li>
+      <li id="step4">The Stadium</li>
+      <li id="step5">Fill the form</li>
+    </ul>
   </div>
 
   <video id="videoplayerhtml" class="f-video-player" preload="auto" muted>
     <source src="https://www.dropbox.com/scl/fi/3e6kovgkyg49hafh9wxp7/Comp-1_6.mp4?rlkey=hk22q21gdhrzhrqqmfbtc6joo&st=wjd60mxn&raw=1" type="video/mp4">
   </video>
-
-  <div id="intro" style="height: 100vh;"></div>
-  <div id="history" style="height: 100vh;"></div>
-  <div id="shop" style="height: 100vh;"></div>
-  <div id="stadium" style="height: 100vh;"></div>
-  <div id="form" style="height: 100vh;"></div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
@@ -199,49 +211,25 @@
 
     $(window).on('scroll', function() {
       const speed = 300;
-      const scroll = $(this).scrollTop() / speed;
-      $video.currentTime = scroll;
+      const scroll = $(this).scrollTop();
+      $video.currentTime = scroll / speed;
 
-      const currentScroll = $(this).scrollTop();
-      if (currentScroll > lastScrollTop && currentScroll > 100) {
+      // Hide/show top bar
+      if (scroll > lastScrollTop && scroll > 100) {
         $topBar.classList.add('hidden');
       } else {
         $topBar.classList.remove('hidden');
       }
-      lastScrollTop = currentScroll;
-    });
+      lastScrollTop = scroll;
 
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    const sections = ['intro', 'history', 'shop', 'stadium', 'form'];
+      // Timeline active step
+      const totalHeight = 52000;
+      const stepHeight = totalHeight / 5;
+      const stepIndex = Math.floor(scroll / stepHeight);
 
-    window.addEventListener('scroll', () => {
-      let scrollY = window.scrollY;
-      let activeSection = '';
-
-      sections.forEach(id => {
-        const el = document.getElementById(id);
-        if (el && scrollY >= el.offsetTop - window.innerHeight / 2) {
-          activeSection = id;
-        }
-      });
-
-      timelineItems.forEach(item => {
-        item.classList.remove('active');
-        if (item.dataset.section === activeSection) {
-          item.classList.add('active');
-        }
-      });
-    });
-
-    timelineItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const section = document.getElementById(item.dataset.section);
-        if (section) {
-          window.scrollTo({ top: section.offsetTop, behavior: 'smooth' });
-        }
-      });
+      $(".timeline li").removeClass("active");
+      $(".timeline li").eq(stepIndex).addClass("active");
     });
   </script>
-
 </body>
 </html>
