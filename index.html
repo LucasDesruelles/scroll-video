@@ -102,6 +102,31 @@
       z-index: 0;
     }
 
+    .timeline {
+      position: fixed;
+      top: 100px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 30;
+    }
+
+    .timeline-item {
+      color: white;
+      font-size: 1rem;
+      text-transform: uppercase;
+      font-weight: bold;
+      opacity: 0.4;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .timeline-item.active {
+      opacity: 1;
+      color: #da291c;
+    }
+
     @media (max-width: 768px) {
       .main-nav {
         flex-direction: column;
@@ -148,9 +173,23 @@
     </div>
   </div>
 
+  <div class="timeline">
+    <div class="timeline-item" data-section="intro">Intro</div>
+    <div class="timeline-item" data-section="history">History</div>
+    <div class="timeline-item" data-section="shop">Shop</div>
+    <div class="timeline-item" data-section="stadium">The Stadium</div>
+    <div class="timeline-item" data-section="form">Fill The Form</div>
+  </div>
+
   <video id="videoplayerhtml" class="f-video-player" preload="auto" muted>
     <source src="https://www.dropbox.com/scl/fi/3e6kovgkyg49hafh9wxp7/Comp-1_6.mp4?rlkey=hk22q21gdhrzhrqqmfbtc6joo&st=wjd60mxn&raw=1" type="video/mp4">
   </video>
+
+  <div id="intro" style="height: 100vh;"></div>
+  <div id="history" style="height: 100vh;"></div>
+  <div id="shop" style="height: 100vh;"></div>
+  <div id="stadium" style="height: 100vh;"></div>
+  <div id="form" style="height: 100vh;"></div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
@@ -170,6 +209,37 @@
         $topBar.classList.remove('hidden');
       }
       lastScrollTop = currentScroll;
+    });
+
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const sections = ['intro', 'history', 'shop', 'stadium', 'form'];
+
+    window.addEventListener('scroll', () => {
+      let scrollY = window.scrollY;
+      let activeSection = '';
+
+      sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && scrollY >= el.offsetTop - window.innerHeight / 2) {
+          activeSection = id;
+        }
+      });
+
+      timelineItems.forEach(item => {
+        item.classList.remove('active');
+        if (item.dataset.section === activeSection) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    timelineItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const section = document.getElementById(item.dataset.section);
+        if (section) {
+          window.scrollTo({ top: section.offsetTop, behavior: 'smooth' });
+        }
+      });
     });
   </script>
 
