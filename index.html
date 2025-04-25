@@ -122,6 +122,7 @@
       font-weight: bold;
       font-size: 1rem;
       position: relative;
+      cursor: pointer;
     }
 
     .timeline li::before {
@@ -191,11 +192,11 @@
 
   <div class="timeline">
     <ul>
-      <li id="step1">Intro</li>
-      <li id="step2">History</li>
-      <li id="step3">Shop</li>
-      <li id="step4">The Stadium</li>
-      <li id="step5">Fill the form</li>
+      <li data-scroll="0">Intro</li>
+      <li data-scroll="15000">History</li>
+      <li data-scroll="20800">Shop</li>
+      <li data-scroll="31200">The Stadium</li>
+      <li data-scroll="41600">Fill the form</li>
     </ul>
   </div>
 
@@ -223,12 +224,20 @@
       lastScrollTop = scroll;
 
       // Timeline active step
-      const totalHeight = 52000;
-      const stepHeight = totalHeight / 5;
-      const stepIndex = Math.floor(scroll / stepHeight);
+      const steps = [0, 15000, 20800, 31200, 41600];
+      let currentStep = 0;
+      for (let i = 0; i < steps.length; i++) {
+        if (scroll >= steps[i]) currentStep = i;
+      }
 
       $(".timeline li").removeClass("active");
-      $(".timeline li").eq(stepIndex).addClass("active");
+      $(".timeline li").eq(currentStep).addClass("active");
+    });
+
+    // Clickable steps
+    $(".timeline li").on("click", function() {
+      const targetScroll = parseInt($(this).data("scroll"));
+      $('html, body').animate({ scrollTop: targetScroll }, 600);
     });
   </script>
 </body>
